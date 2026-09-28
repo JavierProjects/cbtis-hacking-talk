@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071321">
-  <title>Ciberseguridad desde cero — CBTIS</title>
+  <title>Ciberseguridad desde cero — CBTis 83</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
   <div class="deck" id="deck">
-    <header class="chrome"><div class="brand"><span class="mark">&lt;/&gt;</span><span>CBTIS <b>·</b> MISIÓN 01</span></div><div class="chrome-right"><span id="time-tag">00—03 MIN</span><span id="count">01 / 16</span></div></header>
+    <header class="chrome"><div class="brand"><span class="mark">&lt;/&gt;</span><span>CBTis 83 <b>·</b> ACTOPAN</span></div><div class="chrome-right"><span id="time-tag">00—03 MIN</span><span id="count">01 / 16</span></div></header>
 
     <main id="slides">
       <section class="slide title-slide active" data-time="00—03 MIN" data-notes="Saluda y pregunta quién cree que puede descubrir una falla hoy. No pidas experiencia previa. Deja que imaginen el desenlace.">
-        <div class="eyebrow"><span class="pulse"></span> CONFERENCIA INTERACTIVA · 40 MIN + 15 DE PREGUNTAS</div>
+        <div class="eyebrow"><span class="pulse"></span> CONFERENCIA INTERACTIVA</div>
         <h1>Ciberseguridad<br><em>desde cero.</em></h1>
         <p class="lede">De curiosos a buscadores de vulnerabilidades.</p>
         <div class="hero-footer"><span>Dos retos. Una investigación. Cero experiencia necesaria.</span><span class="arrow-glyph">↗</span></div>
@@ -81,7 +81,7 @@
       <section class="slide demo-slide" data-time="22—27 MIN" data-notes="Primero pulsa Iniciar sesión; carga 104 y pide predicción. Cambia el número a 105 o pulsa el botón de pista. Pulsa Consultar. No digas el nombre de la falla hasta escuchar la explicación del público.">
         <div class="eyebrow">DEMOSTRACIÓN LOCAL / VERSIÓN VULNERABLE</div>
         <h2>Vamos a comprobarlo <em>de verdad.</em></h2>
-        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">SESIÓN DE PRUEBA</span><div id="session-label" class="session-label">Sin iniciar</div><button type="button" id="start-session" class="primary-btn">Iniciar sesión ficticia de Alex</button><label for="record-number" class="mini-label">CAMBIA EL NÚMERO DEL EXPEDIENTE</label><div class="input-row"><input id="record-number" inputmode="numeric" maxlength="3" value="104" aria-label="Número de expediente"><button type="button" id="visit-vulnerable">Consultar →</button></div><div class="demo-hint">Prueba 104 y luego 105. La sesión sigue siendo la misma.</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="vulnerable-code">—</span></div><div id="vulnerable-url" class="result-url">/api/vulnerable/expedientes/104</div><div id="vulnerable-result" class="result-body muted">Inicia la sesión ficticia para comenzar.</div></div></div>
+        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">SESIÓN DE PRUEBA</span><div id="session-label" class="session-label">Sin iniciar</div><button type="button" id="start-session" class="primary-btn">Iniciar sesión ficticia de Alex</button><br><label for="record-number" class="mini-label">CAMBIA EL NÚMERO DEL EXPEDIENTE</label><div class="input-row"><input id="record-number" inputmode="numeric" maxlength="3" value="104" aria-label="Número de expediente"><button type="button" id="visit-vulnerable">Consultar →</button></div><div class="demo-hint">Prueba 104 y luego 105. La sesión sigue siendo la misma.</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="vulnerable-code">—</span></div><div id="vulnerable-url" class="result-url">/api/vulnerable/expedientes/104</div><div id="vulnerable-result" class="result-body muted">Inicia la sesión ficticia para comenzar.</div></div></div>
         <p class="bottom-note">¿Qué veríamos si el servidor solo comprueba que alguien inició sesión?</p>
       </section>
 
