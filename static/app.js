@@ -1,20 +1,21 @@
 const slides = [...document.querySelectorAll('.slide')];
 const count = document.querySelector('#count');
-const timeTag = document.querySelector('#time-tag');
 const progress = document.querySelector('#progress-fill');
 const notes = document.querySelector('#notes');
 const notesText = document.querySelector('#notes-text');
-let current = 0;
+let current = -1;
 let signedIn = false;
 
 function show(index) {
+  const wasIntro = current === 0;
   current = Math.max(0, Math.min(slides.length - 1, index));
+  if (wasIntro && current !== 0) window.MatrixIntro.stop();
+  if (!wasIntro && current === 0) window.MatrixIntro.start();
   slides.forEach((slide, i) => {
     slide.classList.toggle('active', i === current);
     slide.setAttribute('aria-hidden', String(i !== current));
   });
   count.textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-  timeTag.textContent = slides[current].dataset.time;
   progress.style.width = `${((current + 1) / slides.length) * 100}%`;
   notesText.textContent = slides[current].dataset.notes || '';
   document.querySelector('#prev').disabled = current === 0;
@@ -26,14 +27,14 @@ document.querySelector('#prev').addEventListener('click', () => show(current - 1
 document.querySelector('#next').addEventListener('click', () => show(current + 1));
 
 function resetInteraction() {
-  if (current === 4) document.querySelector('#shift').value = 0, updateCipher();
-  if (current === 9) {
+  if (current === 5) document.querySelector('#shift').value = 0, updateCipher();
+  if (current === 10) {
     document.querySelector('#record-number').value = '104';
-    clearResult('vulnerable', 'Inicia la sesión ficticia para comenzar.');
+    resetDemo();
   }
-  if (current === 11) {
+  if (current === 12) {
     document.querySelector('#protected-number').value = '105';
-    clearResult('protected', 'Consulta el expediente 105.');
+    clearResult('protected', 'Aplica la corrección y consulta el expediente 105.');
   }
 }
 
@@ -104,8 +105,11 @@ async function startSession() {
     document.querySelector('#session-label').textContent = `${session.display_name} · expediente ${session.record_id}`;
     document.querySelector('#start-session').textContent = 'Sesión activa ✓';
     document.querySelector('#protected-session').textContent = `${session.display_name} · expediente ${session.record_id}`;
+    document.querySelector('#fix-status').textContent = session.fixed ? 'Corrección aplicada: también protege la URL antigua.' : 'La corrección aún no se ha aplicado.';
+    return true;
   } catch (error) {
     document.querySelector('#session-label').textContent = error.message;
+    return false;
   }
 }
 
@@ -118,7 +122,7 @@ async function visit(mode) {
   }
   const path = `/api/${mode}/expedientes/${recordId}`;
   document.querySelector(`#${mode}-url`).textContent = path;
-  if (!signedIn) await startSession();
+  if (!signedIn && !await startSession()) return;
   try {
     const response = await fetch(path, {cache: 'no-store'});
     renderResult(mode, response.status, await response.json());
@@ -127,12 +131,38 @@ async function visit(mode) {
   }
 }
 
+async function applyFixAndVisit() {
+  if (!signedIn && !await startSession()) return;
+  try {
+    const response = await fetch('/api/demo/fix', {method: 'POST', cache: 'no-store'});
+    if (!response.ok) throw new Error('No se pudo aplicar la corrección.');
+    document.querySelector('#fix-status').textContent = 'Corrección aplicada: también protege la URL antigua.';
+    await visit('protected');
+  } catch (error) {
+    clearResult('protected', error.message);
+  }
+}
+
+async function resetDemo() {
+  if (!signedIn && !await startSession()) return;
+  try {
+    const response = await fetch('/api/demo/reset', {method: 'POST', cache: 'no-store'});
+    if (!response.ok) throw new Error('No se pudo reiniciar la simulación.');
+    document.querySelector('#fix-status').textContent = 'La corrección aún no se ha aplicado.';
+    clearResult('vulnerable', 'Simulación reiniciada. Consulta 104 y luego 105.');
+    clearResult('protected', 'Aplica la corrección y consulta el expediente 105.');
+  } catch (error) {
+    clearResult('vulnerable', error.message);
+  }
+}
+
 document.querySelector('#start-session').addEventListener('click', startSession);
 document.querySelector('#visit-vulnerable').addEventListener('click', () => visit('vulnerable'));
-document.querySelector('#visit-protected').addEventListener('click', () => visit('protected'));
+document.querySelector('#visit-protected').addEventListener('click', applyFixAndVisit);
+document.querySelector('#reset-demo').addEventListener('click', resetDemo);
 for (const [selector, mode] of [['#record-number', 'vulnerable'], ['#protected-number', 'protected']]) {
   document.querySelector(selector).addEventListener('keydown', event => {
-    if (event.key === 'Enter') { event.preventDefault(); visit(mode); }
+    if (event.key === 'Enter') { event.preventDefault(); mode === 'protected' ? applyFixAndVisit() : visit(mode); }
   });
 }
 
