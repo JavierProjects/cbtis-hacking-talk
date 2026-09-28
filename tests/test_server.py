@@ -22,10 +22,10 @@ class DemoAuthorizationTest(unittest.TestCase):
         cls.server.server_close()
         cls.thread.join()
 
-    def request(self, path, cookie=None):
+    def request(self, path, cookie=None, method="GET"):
         connection = http.client.HTTPConnection("127.0.0.1", self.server.server_port)
         headers = {"Cookie": cookie} if cookie else {}
-        connection.request("GET", path, headers=headers)
+        connection.request(method, path, headers=headers)
         response = connection.getresponse()
         data = json.loads(response.read())
         result = response.status, response.getheader("Set-Cookie"), data
@@ -45,6 +45,19 @@ class DemoAuthorizationTest(unittest.TestCase):
         self.assertEqual((leak_status, other["name"]), (200, "Sam Ortega"))
         self.assertEqual(blocked_status, 403)
         self.assertIn("Acceso denegado", blocked["error"])
+
+        fixed_status, _, state = self.request("/api/demo/fix", cookie, "POST")
+        self.assertEqual((fixed_status, state["fixed"]), (200, True))
+        old_url_status, _, _ = self.request("/api/vulnerable/expedientes/105", cookie)
+        own_old_url_status, _, _ = self.request("/api/vulnerable/expedientes/104", cookie)
+        self.assertEqual((old_url_status, own_old_url_status), (403, 200))
+        _, _, same_session = self.request("/api/session", cookie)
+        self.assertTrue(same_session["fixed"])
+
+        reset_status, _, state = self.request("/api/demo/reset", cookie, "POST")
+        self.assertEqual((reset_status, state["fixed"]), (200, False))
+        replay_status, _, _ = self.request("/api/vulnerable/expedientes/105", cookie)
+        self.assertEqual(replay_status, 200)
 
 
 if __name__ == "__main__":
