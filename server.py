@@ -19,7 +19,7 @@ RECORDS = {
     "104": {"id": "104", "name": "Alex Rivera", "group": "1.º A", "owner": "alex", "document": "Constancia de inscripción", "status": "Disponible"},
     "105": {"id": "105", "name": "Sam Ortega", "group": "3.º B", "owner": "sam", "document": "Constancia de inscripción", "status": "Disponible"},
 }
-SESSIONS = set()
+SESSIONS = {}
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -53,12 +53,13 @@ class Handler(BaseHTTPRequestHandler):
             token = self._session()
             if not token:
                 token = secrets.token_urlsafe(32)
-                SESSIONS.add(token)
-            self._json(HTTPStatus.OK, {"user": "alex", "display_name": "Alex Rivera", "record_id": "104"}, token)
+                SESSIONS[token] = {"user": "alex", "fixed": False}
+            self._json(HTTPStatus.OK, {"user": "alex", "display_name": "Alex Rivera", "record_id": "104", "fixed": SESSIONS[token]["fixed"]}, token)
             return
 
         if path.startswith("/api/"):
-            if not self._session():
+            token = self._session()
+            if not token:
                 self._json(HTTPStatus.UNAUTHORIZED, {"error": "Primero inicia la sesión ficticia de Alex."})
                 return
             parts = path.strip("/").split("/")
@@ -70,9 +71,9 @@ class Handler(BaseHTTPRequestHandler):
             if not record:
                 self._json(HTTPStatus.NOT_FOUND, {"error": "Ese expediente no existe en la simulación."})
                 return
-            # Vulnerable route: checks a session but omits object-level authorization.
-            # Protected route: checks the owner of the requested record server-side.
-            if mode == "protected" and record["owner"] != "alex":
+            # Before the fix, the old route omits object-level authorization.
+            # After the fix, that SAME route enforces the check too; no bypass remains.
+            if (mode == "protected" or SESSIONS[token]["fixed"]) and record["owner"] != SESSIONS[token]["user"]:
                 self._json(HTTPStatus.FORBIDDEN, {"error": "Acceso denegado: este expediente no pertenece a Alex."})
                 return
             self._json(HTTPStatus.OK, {key: value for key, value in record.items() if key != "owner"})
@@ -86,6 +87,18 @@ class Handler(BaseHTTPRequestHandler):
             return
         content_type = mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
         self._send(HTTPStatus.OK, file_path.read_bytes(), content_type + ("; charset=utf-8" if content_type.startswith(("text/", "application/javascript")) else ""))
+
+    def do_POST(self):
+        path = urlsplit(self.path).path
+        if path not in {"/api/demo/fix", "/api/demo/reset"}:
+            self._json(HTTPStatus.NOT_FOUND, {"error": "Ruta no encontrada."})
+            return
+        token = self._session()
+        if not token:
+            self._json(HTTPStatus.UNAUTHORIZED, {"error": "Primero inicia la sesión ficticia de Alex."})
+            return
+        SESSIONS[token]["fixed"] = path.endswith("/fix")
+        self._json(HTTPStatus.OK, {"fixed": SESSIONS[token]["fixed"]})
 
 
 def main():
