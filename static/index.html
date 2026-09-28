@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071321">
+  <title>Ciberseguridad desde cero — CBTIS</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <header class="chrome"><div class="brand"><span class="mark">&lt;/&gt;</span><span>CBTIS <b>·</b> MISIÓN 01</span></div><div class="chrome-right"><span id="time-tag">00—03 MIN</span><span id="count">01 / 16</span></div></header>
+
+    <main id="slides">
+      <section class="slide title-slide active" data-time="00—03 MIN" data-notes="Saluda y pregunta quién cree que puede descubrir una falla hoy. No pidas experiencia previa. Deja que imaginen el desenlace.">
+        <div class="eyebrow"><span class="pulse"></span> CONFERENCIA INTERACTIVA · 40 MIN + 15 DE PREGUNTAS</div>
+        <h1>Ciberseguridad<br><em>desde cero.</em></h1>
+        <p class="lede">De curiosos a buscadores de vulnerabilidades.</p>
+        <div class="hero-footer"><span>Dos retos. Una investigación. Cero experiencia necesaria.</span><span class="arrow-glyph">↗</span></div>
+      </section>
+
+      <section class="slide" data-time="03—05 MIN" data-notes="Pide voto a mano alzada. Después de dos respuestas: la curiosidad y las preguntas correctas importan más que memorizar comandos.">
+        <div class="eyebrow">01 / LA PREGUNTA</div>
+        <h2>¿Qué hace alguien que<br><em>encuentra fallas?</em></h2>
+        <div class="choice-grid"><div class="choice">A <span>Memoriza cientos de comandos.</span></div><div class="choice">B <span>Hace preguntas y sigue pistas.</span></div><div class="choice">C <span>Nace sabiendo programar.</span></div></div>
+        <p class="bottom-note">Voten con la mano. ¿Cuál elegirían?</p>
+      </section>
+
+      <section class="slide" data-time="05—07 MIN" data-notes="Plantea la regla como permiso para investigar. Todos los escenarios de hoy son inventados y están preparados para practicar.">
+        <div class="eyebrow">REGLA DE LA MISIÓN</div>
+        <h2>La curiosidad necesita<br><em>permiso.</em></h2>
+        <p class="statement">Aquí investigaremos sistemas y datos ficticios diseñados para esta actividad.</p>
+        <div class="callout"><span class="callout-icon">✳</span><span>Investigar · demostrar · explicar · ayudar a corregir.</span></div>
+      </section>
+
+      <section class="slide" data-time="07—08 MIN" data-notes="No expliques el cifrado todavía. Proyecta el mensaje y da 20 segundos para mirar patrones.">
+        <div class="eyebrow">RETO 01 / MENSAJE INTERCEPTADO</div>
+        <h2>Tenemos una pista.<br><em>No podemos leerla.</em></h2>
+        <div class="cipher-preview">PLUD OD GLUHFFLRQ</div>
+        <p class="bottom-note">¿Qué observan? ¿Qué palabras podrían esconderse?</p>
+      </section>
+
+      <section class="slide" data-time="08—12 MIN" data-notes="Explica solo A→D, B→E, C→F. Deja 60–90 segundos de conversación en parejas. Pide un valor del desplazamiento al público. Desliza hasta 3.">
+        <div class="eyebrow">RETO 01 / ROMPER EL CÓDIGO</div>
+        <h2>Una regla para<br><em>todas las letras.</em></h2>
+        <div class="cipher-panel"><div class="mini-label">PISTA: AL CIFRAR, A → D · B → E · C → F</div><div class="cipher-row"><span>Mensaje recibido</span><strong>PLUD OD GLUHFFLRQ</strong></div><label class="shift-label" for="shift">Lugares que retrocedemos <output id="shift-value">0</output></label><input id="shift" type="range" min="0" max="25" value="0"><div class="cipher-row decoded"><span>Tu descifrado</span><strong id="decoded">PLUD OD GLUHFFLRQ</strong></div></div>
+        <p class="bottom-note">Habla un minuto con la persona de al lado. ¿Cuántos lugares retrocedemos?</p>
+      </section>
+
+      <section class="slide" data-time="12—14 MIN" data-notes="Al llegar aquí se revela MIRA LA DIRECCION. Si nadie lo resolvió, vuelve una escena y desliza hasta 3. Explica que César es histórico y fácil de romper, no protección moderna.">
+        <div class="eyebrow">RETO 01 / PRIMERA BANDERA</div>
+        <div class="success-chip">✓ MENSAJE DESCIFRADO</div>
+        <h2><em>MIRA LA DIRECCIÓN.</em></h2>
+        <p class="statement">Descifraron una pista usando una regla y una clave: <strong>3 lugares</strong>.</p>
+        <div class="callout">Si probamos pocos desplazamientos y podemos leer el mensaje, este cifrado ya no protege un secreto.</div>
+      </section>
+
+      <section class="slide" data-time="14—16 MIN" data-notes="Conecta la pista con el caso nuevo. Cuenta que Alex inició sesión y puede ver su constancia. No reveles la falla.">
+        <div class="eyebrow">RETO 02 / EL EXPEDIENTE</div>
+        <h2>Alex entra a consultar<br><em>su constancia.</em></h2>
+        <div class="story-card"><div class="avatar">AR</div><div><div class="mini-label">SESIÓN INICIADA</div><strong>Alex Rivera</strong><span>Expediente 104 · Grupo 1.º A</span></div><span class="status">● ACTIVA</span></div>
+        <p class="bottom-note">Todo parece funcionar. ¿Qué revisarían ustedes?</p>
+      </section>
+
+      <section class="slide" data-time="16—19 MIN" data-notes="Muestra el número al final. Pregunta qué representa y qué podría suceder al cambiarlo. Escucha respuestas antes de avanzar.">
+        <div class="eyebrow">RETO 02 / ENCUENTRA LA PISTA</div>
+        <h2>La dirección tiene<br><em>un detalle.</em></h2>
+        <div class="url-display"><span>http://127.0.0.1:8765/api/vulnerable/expedientes/</span><b>104</b></div>
+        <div class="question-card">¿Qué creen que representa <strong>104</strong>? ¿Qué debería pasar si pedimos <strong>105</strong>?</div>
+        <p class="bottom-note">Conversen 60 segundos. Después escuchamos tres hipótesis.</p>
+      </section>
+
+      <section class="slide" data-time="19—22 MIN" data-notes="Da tres opciones y votación por sectores. La pregunta central es si la sesión por sí sola autoriza cualquier expediente.">
+        <div class="eyebrow">ANTES DE PROBAR</div>
+        <h2>Alex solicita el<br><em>expediente 105.</em></h2>
+        <div class="choice-grid"><div class="choice">A <span>El sistema pide otra contraseña.</span></div><div class="choice">B <span>El sistema muestra otro expediente.</span></div><div class="choice">C <span>El sistema niega el acceso.</span></div></div>
+        <p class="bottom-note">Voten. Después vamos a comprobarlo.</p>
+      </section>
+
+      <section class="slide demo-slide" data-time="22—27 MIN" data-notes="Primero pulsa Iniciar sesión; carga 104 y pide predicción. Cambia el número a 105 o pulsa el botón de pista. Pulsa Consultar. No digas el nombre de la falla hasta escuchar la explicación del público.">
+        <div class="eyebrow">DEMOSTRACIÓN LOCAL / VERSIÓN VULNERABLE</div>
+        <h2>Vamos a comprobarlo <em>de verdad.</em></h2>
+        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">SESIÓN DE PRUEBA</span><div id="session-label" class="session-label">Sin iniciar</div><button type="button" id="start-session" class="primary-btn">Iniciar sesión ficticia de Alex</button><label for="record-number" class="mini-label">CAMBIA EL NÚMERO DEL EXPEDIENTE</label><div class="input-row"><input id="record-number" inputmode="numeric" maxlength="3" value="104" aria-label="Número de expediente"><button type="button" id="visit-vulnerable">Consultar →</button></div><div class="demo-hint">Prueba 104 y luego 105. La sesión sigue siendo la misma.</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="vulnerable-code">—</span></div><div id="vulnerable-url" class="result-url">/api/vulnerable/expedientes/104</div><div id="vulnerable-result" class="result-body muted">Inicia la sesión ficticia para comenzar.</div></div></div>
+        <p class="bottom-note">¿Qué veríamos si el servidor solo comprueba que alguien inició sesión?</p>
+      </section>
+
+      <section class="slide" data-time="27—29 MIN" data-notes="Explica control de acceso roto: sesión válida ≠ autorización para ese objeto. Pide una solución en una frase. La ruta vulnerable es intencional.">
+        <div class="eyebrow">¿QUÉ FALLÓ?</div>
+        <h2>Estar dentro no da permiso<br><em>para verlo todo.</em></h2>
+        <div class="logic-block"><span>✓ ¿Alex inició sesión?</span><strong>Faltó: ¿el expediente 105 pertenece a Alex?</strong></div>
+        <p class="statement">Esta falla se llama <strong>control de acceso roto</strong>. ¿Cómo la corregirían?</p>
+      </section>
+
+      <section class="slide demo-slide" data-time="29—32 MIN" data-notes="Con la misma sesión consulta 105 en la ruta protegida. Aparece HTTP 403. Consulta 104 para mostrar que Alex sí conserva acceso a lo suyo.">
+        <div class="eyebrow">DEMOSTRACIÓN LOCAL / VERSIÓN CORREGIDA</div>
+        <h2>Ahora el servidor<br><em>comprueba el permiso.</em></h2>
+        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">MISMA SESIÓN</span><div id="protected-session" class="session-label">Alex Rivera · expediente 104</div><label for="protected-number" class="mini-label">EXPEDIENTE SOLICITADO</label><div class="input-row"><input id="protected-number" inputmode="numeric" maxlength="3" value="105" aria-label="Número de expediente protegido"><button type="button" id="visit-protected">Consultar →</button></div><div class="demo-hint">Prueba 105 y después 104. ¿Qué cambió?</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="protected-code">—</span></div><div id="protected-url" class="result-url">/api/protected/expedientes/105</div><div id="protected-result" class="result-body muted">Consulta el expediente 105.</div></div></div>
+        <p class="bottom-note">La comprobación ocurre en el servidor para cada expediente solicitado.</p>
+      </section>
+
+      <section class="slide" data-time="32—35 MIN" data-notes="Conecta las acciones que acaban de realizar con perfiles distintos. No todos deben ser programadores expertos para comenzar.">
+        <div class="eyebrow">LO QUE ACABAN DE HACER</div>
+        <h2>Eso también es<br><em>ciberseguridad.</em></h2>
+        <div class="career-grid"><div><span>01</span><strong>Criptoanálisis</strong><p>Descifrar patrones.</p></div><div><span>02</span><strong>Investigación</strong><p>Seguir pistas y probar hipótesis.</p></div><div><span>03</span><strong>Desarrollo seguro</strong><p>Corregir el acceso a datos.</p></div><div><span>04</span><strong>Comunicación</strong><p>Explicar el riesgo con claridad.</p></div></div>
+      </section>
+
+      <section class="slide resources-slide" data-time="35—38 MIN" data-notes="No abras los enlaces: no hay internet estable. Indica que pueden fotografiar la diapositiva. Recomienda elegir solo una plataforma y completar un reto esta semana.">
+        <div class="eyebrow">TU SIGUIENTE MISIÓN / ESTA SEMANA</div>
+        <h2>Elige una puerta.<br><em>Resuelve un reto.</em></h2>
+        <div class="resource-grid"><a href="https://learn.cylabacademy.org/" target="_blank" rel="noopener noreferrer"><span>01 / BANDERAS</span><strong>CyLab Security Academy</strong><code>learn.cylabacademy.org</code></a><a href="https://cryptohack.org/" target="_blank" rel="noopener noreferrer"><span>02 / CIFRADOS</span><strong>CryptoHack</strong><code>cryptohack.org</code></a><a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener noreferrer"><span>03 / TERMINAL</span><strong>OverTheWire: Bandit</strong><code>overthewire.org/wargames/bandit</code></a></div>
+        <p class="bottom-note">Siguientes niveles: <a href="https://portswigger.net/web-security" target="_blank" rel="noopener noreferrer">PortSwigger Web Security Academy</a> · <a href="https://pwnable.kr/" target="_blank" rel="noopener noreferrer">pwnable.kr</a></p>
+      </section>
+
+      <section class="slide closing-slide" data-time="38—40 MIN" data-notes="Cierra con una invitación concreta: una plataforma, un reto, una semana. Deja que tomen foto. Repite que se practica con permiso.">
+        <div class="eyebrow">MISIÓN COMPLETADA</div>
+        <h2>Hoy encontraron<br><em>una pista, una falla<br>y una solución.</em></h2>
+        <p class="statement">La próxima bandera puede ser tuya.</p>
+        <div class="closing-action">ELIGE UNA PLATAFORMA · RESUELVE UN RETO · CUÉNTALE A ALGUIEN CÓMO LO LOGRASTE</div>
+      </section>
+
+      <section class="slide qa-slide" data-time="40—55 MIN" data-notes="Quince minutos de preguntas. Si nadie comienza, pregunta: ¿hay que saber programar?, ¿qué practicarías primero?, ¿cómo se avisa de una falla con responsabilidad?">
+        <div class="eyebrow">PREGUNTAS / 15 MIN</div>
+        <h2>Ahora ustedes<br><em>preguntan.</em></h2>
+        <p class="statement">¿Qué les gustaría investigar después de hoy?</p>
+      </section>
+    </main>
+
+    <aside id="notes" class="notes" hidden><span>NOTAS DEL PONENTE</span><p id="notes-text"></p></aside>
+    <footer class="controls"><div class="progress"><div id="progress-fill"></div></div><div class="control-row"><span class="key-hint">← → avanzar · F pantalla completa · N notas</span><div class="nav"><button type="button" id="prev" aria-label="Escena anterior">←</button><button type="button" id="next" aria-label="Escena siguiente">→</button></div></div></footer>
+  </div>
+</body>
+</html>
