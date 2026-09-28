@@ -6,14 +6,24 @@
   <meta name="theme-color" content="#071321">
   <title>Ciberseguridad desde cero — CBTis 83</title>
   <link rel="stylesheet" href="/style.css">
+  <script src="/matrix.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
   <div class="deck" id="deck">
-    <header class="chrome"><div class="brand"><span class="mark">&lt;/&gt;</span><span>CBTis 83 <b>·</b> ACTOPAN</span></div><div class="chrome-right"><span id="time-tag">00—03 MIN</span><span id="count">01 / 16</span></div></header>
+    <header class="chrome"><div class="brand"><span class="mark">&lt;/&gt;</span><span>CBTis 83 <b>·</b> ACTOPAN</span></div><div class="chrome-right"><span id="count">01 / 17</span></div></header>
 
     <main id="slides">
-      <section class="slide title-slide active" data-time="00—03 MIN" data-notes="Saluda y pregunta quién cree que puede descubrir una falla hoy. No pidas experiencia previa. Deja que imaginen el desenlace.">
+      <section class="slide matrix-slide active" data-notes="Deja correr la lluvia de caracteres. Cada cinco segundos aparecen o desaparecen tu nombre y las siglas. Cuando estés listo, pulsa la flecha derecha para comenzar.">
+        <canvas id="matrix-rain" aria-hidden="true"></canvas>
+        <div id="matrix-identity" class="matrix-identity" aria-label="Dr. Francisco Javier Cuadros Romero, ITICs">
+          <span class="matrix-label">CONFERENCIA · CIBERSEGURIDAD</span>
+          <strong>Dr. Francisco Javier<br>Cuadros Romero</strong>
+          <span class="matrix-acronym">ITICs</span>
+        </div>
+        <span class="matrix-prompt">PULSA → PARA INICIAR</span>
+      </section>
+      <section class="slide title-slide" data-time="00—03 MIN" data-notes="Saluda y pregunta quién cree que puede descubrir una falla hoy. No pidas experiencia previa. Deja que imaginen el desenlace.">
         <div class="eyebrow"><span class="pulse"></span> CONFERENCIA INTERACTIVA</div>
         <h1>Ciberseguridad<br><em>desde cero.</em></h1>
         <p class="lede">De curiosos a buscadores de vulnerabilidades.</p>
@@ -81,7 +91,7 @@
       <section class="slide demo-slide" data-time="22—27 MIN" data-notes="Primero pulsa Iniciar sesión; carga 104 y pide predicción. Cambia el número a 105 o pulsa el botón de pista. Pulsa Consultar. No digas el nombre de la falla hasta escuchar la explicación del público.">
         <div class="eyebrow">DEMOSTRACIÓN LOCAL / VERSIÓN VULNERABLE</div>
         <h2>Vamos a comprobarlo <em>de verdad.</em></h2>
-        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">SESIÓN DE PRUEBA</span><div id="session-label" class="session-label">Sin iniciar</div><button type="button" id="start-session" class="primary-btn">Iniciar sesión ficticia de Alex</button><br><label for="record-number" class="mini-label">CAMBIA EL NÚMERO DEL EXPEDIENTE</label><div class="input-row"><input id="record-number" inputmode="numeric" maxlength="3" value="104" aria-label="Número de expediente"><button type="button" id="visit-vulnerable">Consultar →</button></div><div class="demo-hint">Prueba 104 y luego 105. La sesión sigue siendo la misma.</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="vulnerable-code">—</span></div><div id="vulnerable-url" class="result-url">/api/vulnerable/expedientes/104</div><div id="vulnerable-result" class="result-body muted">Inicia la sesión ficticia para comenzar.</div></div></div>
+        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">SESIÓN DE PRUEBA</span><div id="session-label" class="session-label">Sin iniciar</div><button type="button" id="start-session" class="primary-btn">Iniciar sesión ficticia de Alex</button><br><label for="record-number" class="mini-label">CAMBIA EL NÚMERO DEL EXPEDIENTE</label><div class="input-row"><input id="record-number" inputmode="numeric" maxlength="3" value="104" aria-label="Número de expediente"><button type="button" id="visit-vulnerable">Consultar →</button></div><div class="demo-hint">Prueba 104 y luego 105. <button type="button" id="reset-demo" class="text-btn">Reiniciar simulación</button></div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="vulnerable-code">—</span></div><div id="vulnerable-url" class="result-url">/api/vulnerable/expedientes/104</div><div id="vulnerable-result" class="result-body muted">Inicia la sesión ficticia para comenzar.</div></div></div>
         <p class="bottom-note">¿Qué veríamos si el servidor solo comprueba que alguien inició sesión?</p>
       </section>
 
@@ -92,11 +102,11 @@
         <p class="statement">Esta falla se llama <strong>control de acceso roto</strong>. ¿Cómo la corregirían?</p>
       </section>
 
-      <section class="slide demo-slide" data-time="29—32 MIN" data-notes="Con la misma sesión consulta 105 en la ruta protegida. Aparece HTTP 403. Consulta 104 para mostrar que Alex sí conserva acceso a lo suyo.">
+      <section class="slide demo-slide" data-time="29—32 MIN" data-notes="Pulsa Aplicar corrección y consultar: activa la comprobación para TODAS las rutas de esta sesión. Muestra HTTP 403 para 105. Vuelve a la pestaña antigua, recárgala y observa que también responde 403; 104 sigue disponible. Para repetir, pulsa Reiniciar simulación en la escena anterior.">
         <div class="eyebrow">DEMOSTRACIÓN LOCAL / VERSIÓN CORREGIDA</div>
         <h2>Ahora el servidor<br><em>comprueba el permiso.</em></h2>
-        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">MISMA SESIÓN</span><div id="protected-session" class="session-label">Alex Rivera · expediente 104</div><label for="protected-number" class="mini-label">EXPEDIENTE SOLICITADO</label><div class="input-row"><input id="protected-number" inputmode="numeric" maxlength="3" value="105" aria-label="Número de expediente protegido"><button type="button" id="visit-protected">Consultar →</button></div><div class="demo-hint">Prueba 105 y después 104. ¿Qué cambió?</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="protected-code">—</span></div><div id="protected-url" class="result-url">/api/protected/expedientes/105</div><div id="protected-result" class="result-body muted">Consulta el expediente 105.</div></div></div>
-        <p class="bottom-note">La comprobación ocurre en el servidor para cada expediente solicitado.</p>
+        <div class="demo-layout"><div class="demo-controls"><span class="mini-label">MISMA SESIÓN</span><div id="protected-session" class="session-label">Alex Rivera · expediente 104</div><label for="protected-number" class="mini-label">EXPEDIENTE SOLICITADO</label><div class="input-row"><input id="protected-number" inputmode="numeric" maxlength="3" value="105" aria-label="Número de expediente protegido"><button type="button" id="visit-protected">Aplicar corrección y consultar →</button></div><div id="fix-status" class="demo-hint">La corrección aún no se ha aplicado.</div></div><div class="result-card"><div class="result-head"><span>RESPUESTA DEL SERVIDOR</span><span id="protected-code">—</span></div><div id="protected-url" class="result-url">/api/protected/expedientes/105</div><div id="protected-result" class="result-body muted">Aplica la corrección y consulta el expediente 105.</div></div></div>
+        <p class="bottom-note">Recarga también la URL antigua con 105: ahora debe responder 403.</p>
       </section>
 
       <section class="slide" data-time="32—35 MIN" data-notes="Conecta las acciones que acaban de realizar con perfiles distintos. No todos deben ser programadores expertos para comenzar.">
